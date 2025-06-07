@@ -19,24 +19,24 @@ cmd1, cmd2: commands to execute (with optional arguments)
 outfile: file to write the final output to
 
 ## How It Works
-Open infile for reading and outfile for writing (create/truncate).
+1. Open infile for reading and outfile for writing (create/truncate).
 
-Create a pipe with pipe().
+2. Create a pipe with pipe().
 
-Fork first child:
+3. Fork first child:
 
-Redirect its stdin to infile.
+  - Redirect its stdin to infile.
 
-Redirect its stdout to the pipe’s write end.
+  - Redirect its stdout to the pipe’s write end.
 
-Execute cmd1 with execve().
+  - Execute cmd1 with execve().
 
-Fork second child:
+4. Fork second child:
 
-Redirect its stdin to the pipe’s read end.
+  - Redirect its stdin to the pipe’s read end.
 
-Redirect its stdout to outfile.
+  - Redirect its stdout to outfile.
 
-Execute cmd2 with execve().
+  - Execute cmd2 with execve().
 
-Parent closes unused descriptors and waits for both children.
+5. Parent closes unused descriptors and waits for both children.
